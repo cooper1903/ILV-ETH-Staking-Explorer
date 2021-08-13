@@ -222,7 +222,13 @@ server <- function(input, output, session) {
                  scale_color_identity(guide = "legend", name="", breaks=c("#fc8d59", "#99d594", "#e6f598", "#d53e4f", "#3288bd", "black"),
                                       labels = c("Total rewards","Claimed ILV rewards","ILV pool rewards", "Gas fees", "Total rewards - Gas fees", "Initial investment [$]")) +
                  guides(color = guide_legend(override.aes = list(size=5)))+
-                 scale_size_identity(guide="none") #+
+                 scale_size_identity(guide="none") +
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=ilvstake*ilvprice, color="black",label=ilvstake*ilvprice,vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice, color="#fc8d59",label=round(ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice),vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=ilvstake*ilvprice+tail(rewadf_w,1)$ilvclaimcomp*ilvprice, color="#99d594",label=round(ilvstake*ilvprice+tail(rewadf_w,1)$ilvclaimcomp*ilvprice),vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=ilvstake*ilvprice+ tail(rewadf_w,1)$ilvsingle*ilvprice, color="#e6f598",label=round(ilvstake*ilvprice+tail(rewadf_w,1)$ilvsingle*ilvprice),vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=ilvstake*ilvprice+tail(rewadf_w,1)$gas_accu, color="#d53e4f",label=tail(rewadf_w,1)$gas_accu,vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice+tail(rewadf_w,1)$gas_accu, color="#3288bd",label=round(ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice+tail(rewadf_w,1)$gas_accu),vjust=0,hjust=1)#+
                },
              
              
@@ -315,7 +321,20 @@ server <- function(input, output, session) {
                  scale_color_identity(guide = "legend", name="", breaks=c("#fc8d59", "#fee08b", "#99d594", "#d53e4f", "#3288bd", "black"),
                                       labels = c("Total rewards","SLP pool rewards","Claimed ILV rewards", "Gas fees", "Total rewards - Gas fees", "Initial investment [$]")) +
                  guides(color = guide_legend(override.aes = list(size=5)))+
-                 scale_size_identity(guide="none") #+
+                 scale_size_identity(guide="none")+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice, color="black",label=slpstake*2*ilvprice,vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice+tail(rewadf_w,1)$slprewa_acc*ilvprice + tail(rewadf_w,1)$ilvclaimrewards_acc * ilvprice,
+                          color="#fc8d59",label=round(slpstake*2*ilvprice+tail(rewadf_w,1)$slprewa_acc*ilvprice + tail(rewadf_w,1)$ilvclaimrewards_acc * ilvprice),vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice+tail(rewadf_w,1)$slprewa_acc*ilvprice,
+                          color="#fee08b",label=round(slpstake*2*ilvprice+tail(rewadf_w,1)$slprewa_acc*ilvprice),vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice+ tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice,
+                          color="#99d594",label=round(slpstake*2*ilvprice+tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice),vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice+tail(rewadf_w,1)$gas_accu,
+                          color="#d53e4f",label=tail(rewadf_w,1)$gas_accu,vjust=0,hjust=1)+
+                 annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice+tail(rewadf_w,1)$slprewa_acc*ilvprice+tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice+tail(rewadf_w,1)$gas_accu,
+                          color="#3288bd",label=round(slpstake*2*ilvprice+tail(rewadf_w,1)$slprewa_acc*ilvprice+tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice+tail(rewadf_w,1)$gas_accu),vjust=0,hjust=1)#+
+               
+               
                
              },
              
@@ -427,7 +446,26 @@ server <- function(input, output, session) {
       scale_color_identity(guide = "legend", name="", breaks=c("#fc8d59", "#fee08b","#e6f598", "#99d594", "#d53e4f", "#3288bd", "black"),
                            labels = c("Total rewards","SLP rewards","ILV pool rewards","Claimed ILV rewards", "Gas fees", "Total rewards - Gas fees", "Initial investment [$]")) +
       guides(color = guide_legend(override.aes = list(size=5)))+
-      scale_size_identity(guide="none") #+
+      scale_size_identity(guide="none")+
+      annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice + ilvstake*ilvprice, color="black",label=slpstake*2*ilvprice + ilvstake*ilvprice,vjust=0,hjust=1)+
+      
+      annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice + tail(rewadf_w,1)$slprewa_acc*ilvprice+ tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice,
+               color="#fc8d59",label=round(slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice + tail(rewadf_w,1)$slprewa_acc*ilvprice+ tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice),vjust=0,hjust=1)+
+      
+      annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$slprewa_acc*ilvprice,
+               color="#fee08b",label=round(slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$slprewa_acc*ilvprice),vjust=0,hjust=1)+
+      
+      annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice + ilvstake*ilvprice+ tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice,
+               color="#99d594",label=round(slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice),vjust=0,hjust=1)+
+      
+      annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$gas_accu,
+               color="#d53e4f",label=tail(rewadf_w,1)$gas_accu,vjust=0,hjust=1)+
+      
+      annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice + tail(rewadf_w,1)$slprewa_acc*ilvprice+ tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice+tail(rewadf_w,1)$gas_accu,
+               color="#3288bd",label=round(slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice + tail(rewadf_w,1)$slprewa_acc*ilvprice+ tail(rewadf_w,1)$ilvclaimrewards_acc*ilvprice+tail(rewadf_w,1)$gas_accu),vjust=0,hjust=1)+#+
+      
+      annotate(geom="text",x=claimdays-(0.01*claimdays),y=slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice,
+               color="#e6f598",label=round(slpstake*2*ilvprice + ilvstake*ilvprice+tail(rewadf_w,1)$ilvrewa_acc*ilvprice),vjust=0,hjust=1) #+
                }
       )
     })
